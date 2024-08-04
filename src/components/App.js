@@ -5,7 +5,7 @@ const API_KEY = '91a2fdcc0f42dd6dc9e4e6788efd8a02'
 
 const App = () => {
 	const [searchText, setSearchText] = useState('')
-	const [weatherData, setWeatherData] = useState(null)
+	const [weatherData, setWeatherData] = useState({})
 	const [error, setError] = useState(null)
 
 	useEffect(() => {
@@ -20,7 +20,7 @@ const App = () => {
 						setSearchText('')
 						setError(null)
 					} else {
-						setWeatherData(null)
+						setWeatherData({})
 						setError(data.message)
 					}
 				})
@@ -40,16 +40,14 @@ const App = () => {
 				onChange={(e) => setSearchText(e.target.value)}
 			/>
 			<div className='weather'>
-				{weatherData && (
-					<>
-						<h1>{weatherData.name}</h1>
-						<h1>{weatherData.main.temp} F</h1>
-						<h2>{weatherData.weather[0].main}</h2>
-						<img
-							src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-						/>
-					</>
-				)}
+				<h1>{weatherData.name || ''}</h1>
+				<h1>{weatherData.main ? weatherData.main.temp : ''} F</h1>
+				<h2>{weatherData.weather ? weatherData.weather[0].main : ''}</h2>
+				<img
+					src={`http://openweathermap.org/img/w/${
+						weatherData.weather ? weatherData.weather[0].icon : ''
+					}.png`}
+				/>
 			</div>
 			{error && <p className='error'>{error}</p>}
 		</div>
