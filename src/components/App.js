@@ -13,8 +13,8 @@ const App = () => {
 			const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchText}&appid=${API_KEY}`
 			fetch(url)
 				.then((res) => res.json())
-        .then((data) => {
-          console.log(data)
+				.then((data) => {
+					console.log(data)
 					if (data.cod == '200') {
 						setWeatherData(data)
 						setSearchText('')
@@ -24,9 +24,9 @@ const App = () => {
 						setError(data.message)
 					}
 				})
-    }
-    
-    searchText && callApi()
+		}
+
+		searchText && callApi()
 	}, [searchText])
 
 	return (
@@ -39,16 +39,18 @@ const App = () => {
 				value={searchText}
 				onChange={(e) => setSearchText(e.target.value)}
 			/>
-			{weatherData && (
-				<div className='weather'>
-					<h1>{weatherData.name}</h1>
-					<h1>{weatherData.main.temp} F</h1>
-					<h2>{weatherData.weather[0].main}</h2>
-					<img
-						src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-					/>
-				</div>
-			)}
+			<div className='weather'>
+				{weatherData && (
+					<>
+						<h1>{weatherData.name}</h1>
+						<h1>{weatherData.main.temp} F</h1>
+						<h2>{weatherData.weather[0].main}</h2>
+						<img
+							src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
+						/>
+					</>
+				)}
+			</div>
 			{error && <p className='error'>{error}</p>}
 		</div>
 	)
